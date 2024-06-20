@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/header'); %>
+</head>
+<body>
+    <%- include('./partials/navbar'); %>
+    <div class="container">
+        <h1> <%= title %></h1>
+    </div>
+    <div class="container">
+        <h1> <%= title %></h1>
+        <div>
+            <form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Author name</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Publication date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% post.forEach(function(onePost) { %>
+                        <tr>
+                        <td><%= onePost.authorName %></td>
+                        <td><%= onePost.title %></td>
+                        <td><%= onePost.location %></td>
+                        <td><%= onePost.publicationDate %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

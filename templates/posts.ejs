@@ -7,6 +7,62 @@
     <%- include('./partials/navbar'); %>
     <div class="container">
         <h1> <%= title %></h1>
+        <div id="app">
+            <form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Post ID</th>
+                        <th scope="col">Author name</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Publication date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% titleBd.forEach(function(post) { %>
+                        <tr>
+                        <td><%= post.postId %></td>
+                        <td><%= post.authorName %></td>
+                        <td><%= post.title %></td>
+                        <td><%= post.location %></td>
+                        <td><%= post.publicationDate %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </form>
+            <form>
+                <select id="postSelect" onchange="if (this.value) window.location.href=this.value">
+                    <option value="" disabled selected> - Open Post by ID - </option>
+                    <% titleBd.forEach(function(post) { %>
+                    <option value="<%= `http://localhost:3000/posts/${post.postId}` %>">
+                        <%= post.postId %>
+                    </option>
+                    <% }); %>
+                </select>
+            </form>
+            <form>
+                <select id="postSelect" onchange="if (this.value) window.location.href=this.value">
+                    <option value="" disabled selected> - Delete Post by ID - </option>
+                    <% titleBd.forEach(function(post) { %>
+                    <option value="<%= `http://localhost:3000/posts/delete/${post.postId}` %>">
+                        <%= post.postId %>
+                    </option>
+                    <% }); %>
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="container" class="d-flex flex-column h-100">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+            <p class="col-md-4 mb-0 text-muted">&copy; Some blog project </p>
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a href="/" class="nav-link px-2"> About </a></li>
+                <li class="nav-item"><a href="/articles" class="nav-link px-2"> Posts</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2"> Something </a></li>
+            </ul>
+        </footer>
     </div>
 </body>
 </html>
