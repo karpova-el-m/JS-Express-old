@@ -13,20 +13,20 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form> -->
-        <form>
+        <form action="http://localhost:3000/write_post/saved" method="POST">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"> Author name </label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters" name="authorName">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label"> Title </label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Up to 250 characters" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Up to 250 characters" rows="3" name="title"></textarea></textarea>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"> Location </label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters" name="location">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button> 
         </form>
     </div>
     <%- include('./partials/footer'); %>

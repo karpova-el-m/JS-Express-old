@@ -13,6 +13,7 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 
 async function startApp() {
   try {
@@ -70,8 +71,14 @@ app.get("/posts", (req, res, next) => {
     });
 });
 
-app.get("/write_post", (req, res, next) => { // если get, то ссылка /write_post работает 
-  var reqBody = req.body;
+app.get("/write_post", (req, res) => {
+  console.log(req.body)
+  res.render("writePost", { title: "Write post", active: "write_post" });
+});
+
+app.post("/write_post/saved", (req, res, next) => {
+  var reqBody = {...req.body};
+  console.log(reqBody)
   db.run(`INSERT INTO posts (authorName, title, location) VALUES (?,?,?)`,
       [reqBody.authorName, reqBody.title, reqBody.location, reqBody.publicationDate],
       function (err, result) {
@@ -79,9 +86,8 @@ app.get("/write_post", (req, res, next) => { // если get, то ссылка 
           res.render("writePost", { title: err.message, active: "-" });
           return next();
         }
-        let title = this.lastID
+        let title = `Your post has been saved, post ID: ${this.lastID}`
         res.render("writePost", { title: title, active: "write_post" });
-        // res.render("writePost", { title: "Write post", active: "write_post" })
     });
 });
 
