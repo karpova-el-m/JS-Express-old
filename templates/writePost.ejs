@@ -7,6 +7,27 @@
     <%- include('./partials/navbar'); %>
     <div class="container">
         <h1> <%= title %></h1>
+        <!-- <form @submit.prevent="createServer">
+            <div class="mb-3">
+                <input class="form-control" type="text" v-model="name">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form> -->
+        <form>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"> Author name </label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"> Title </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Up to 250 characters" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"> Location </label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
     <%- include('./partials/footer'); %>
 </body>

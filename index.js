@@ -26,7 +26,7 @@ async function startApp() {
 startApp();
 
 db.run(
-  `CREATE TABLE IF NOT EXISTS POSTS (
+  `CREATE TABLE IF NOT EXISTS posts (
         postId INTEGER PRIMARY KEY AUTOINCREMENT,
         authorName TEXT(20),
         title TEXT(250),
@@ -39,20 +39,20 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("writePost", { title: "Write post", active: "writePost" })
+  res.render("startPage", { title: "Write post", active: "-" })
 });
 
 app.get("/posts/:id", (req, res, next) => {
     db.all(`SELECT * FROM posts where postId = ?`, [req.params.id], (err, row) => {
         if (err) {
-          res.render("post", { title: err.message, active: "post" });
+          res.render("post", { title: err.message, active: "-" });
           return next();
         }
         if (!row || !row.length) {
-          res.render("postNotFound", { title: "Post not found", active: "post" });
+          res.render("postNotFound", { title: "Post not found", active: "-" });
           return next();
         }
-        res.render("post", { title: row.postId, post: row, active: "post" });
+        res.render("post", { title: row.postId, post: row, active: "-" });
       });
 });
 
@@ -63,29 +63,28 @@ app.get("/posts", (req, res, next) => {
         return next();
       }
       if (!rows || !rows.length) {
-        res.render("posts", { title: "Posts not found", active: "posts" });
+        res.render("postNotFound", { title: "Posts not found", active: "posts" });
         return next();
       }
       res.render("posts", { title: "Posts", titleBd: rows, active: "posts" });
     });
 });
 
-app.post("/", (req, res, next) => {
+app.get("/write_post", (req, res, next) => { // если get, то ссылка /write_post работает 
   var reqBody = req.body;
   db.run(`INSERT INTO posts (authorName, title, location) VALUES (?,?,?)`,
       [reqBody.authorName, reqBody.title, reqBody.location, reqBody.publicationDate],
       function (err, result) {
         if (err) {
-          res.render("/", { title: err.message, active: "post" });
+          res.render("writePost", { title: err.message, active: "-" });
           return next();
         }
         let title = this.lastID
-        res.status(201).json({
-            "post_id": title
-        })
-        res.render("writePost", { title: title, active: "writePost" });
+        res.render("writePost", { title: title, active: "write_post" });
+        // res.render("writePost", { title: "Write post", active: "write_post" })
     });
 });
+
 
 app.put("/posts/:id", (req, res, next) => {
   var reqBody = req.body;
@@ -101,17 +100,13 @@ app.put("/posts/:id", (req, res, next) => {
 
 });
 
-app.delete("/posts/delete/:id", (req, res, next) => {
+app.get("/posts/delete/:id", (req, res, next) => {
   db.all(`DELETE FROM posts WHERE postId = ?`, [req.params.id], function (err, result) {
           if (err) {
               res.status(400).json({ "error": res.message })
               return next();
-          }
-          if (this.changes > 0) {
-            res.render("delete", { title: "Post has been deleted", active: "post", result: this.changes });
-            res.status(200).json(this.changes)
           } else {
-            res.render("postNotFound", { title: "Posts not found", active: "post" });
-          }
+          res.render("delete", { title: "Post has been deleted", active: "post", result: this.changes });
+          } 
       });
 });
