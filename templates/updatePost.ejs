@@ -7,7 +7,7 @@
     <%- include('./partials/navbar'); %>
     <div class="container">
         <h1> <%= title %></h1>
-        <form action="http://localhost:3000/write_post/saved" method="POST">
+        <form action="<%=`http://localhost:3000/updated/${id}`%>">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"> Author name </label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Up to 20 characters" name="authorName">

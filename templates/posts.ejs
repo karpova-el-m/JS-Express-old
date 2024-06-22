@@ -33,7 +33,7 @@
                 </table>
             </form>
             <form>
-                <select id="postSelect" onchange="if (this.value) window.location.href=this.value">
+                <select id="postSelect" class="form-select form-select-md mb-3" onchange="if (this.value) window.location.href=this.value">
                     <option value="" disabled selected> - Open Post by ID - </option>
                     <% titleBd.forEach(function(post) { %>
                     <option value="<%= `http://localhost:3000/posts/${post.postId}` %>">
@@ -43,10 +43,20 @@
                 </select>
             </form>
             <form>
-                <select id="postSelect" onchange="if (this.value) window.location.href=this.value">
+                <select id="postSelect" class="form-select form-select-md mb-3" onchange="if (this.value) window.location.href=this.value">
                     <option value="" disabled selected> - Delete Post by ID - </option>
                     <% titleBd.forEach(function(post) { %>
                     <option value="<%= `http://localhost:3000/posts/delete/${post.postId}` %>">
+                        <%= post.postId %>
+                    </option>
+                    <% }); %>
+                </select>
+            </form>
+            <form>
+                <select id="postSelect" class="form-select form-select-md mb-3" onchange="if (this.value) window.location.href=this.value">
+                    <option value="" disabled selected> - Update Post by ID - </option>
+                    <% titleBd.forEach(function(post) { %>
+                    <option value="<%= `http://localhost:3000/posts/update/${post.postId}` %>">
                         <%= post.postId %>
                     </option>
                     <% }); %>

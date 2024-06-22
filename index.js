@@ -72,13 +72,11 @@ app.get("/posts", (req, res, next) => {
 });
 
 app.get("/write_post", (req, res) => {
-  console.log(req.body)
-  res.render("writePost", { title: "Write post", active: "write_post" });
+  res.render("writePost", { title: "Write post", active: "writePost" });
 });
 
 app.post("/write_post/saved", (req, res, next) => {
   var reqBody = {...req.body};
-  console.log(reqBody)
   db.run(`INSERT INTO posts (authorName, title, location) VALUES (?,?,?)`,
       [reqBody.authorName, reqBody.title, reqBody.location, reqBody.publicationDate],
       function (err, result) {
@@ -87,13 +85,17 @@ app.post("/write_post/saved", (req, res, next) => {
           return next();
         }
         let title = `Your post has been saved, post ID: ${this.lastID}`
-        res.render("writePost", { title: title, active: "write_post" });
+        res.render("writePost", { title: title, active: "writePost" });
     });
 });
 
+app.get("/posts/update/:id", (req, res) => {
+  const id = req.params.id
+  res.render("updatePost", { title: `Update post, post ID: ${id}`, id: id, active: "-" });
+});
 
-app.put("/posts/:id", (req, res, next) => {
-  var reqBody = req.body;
+app.get("/updated/:id", (req, res, next) => {
+  var reqBody = {...req.query};
   db.all(`UPDATE posts SET authorName = ?, title = ?, location = ? WHERE postId = ?`,
       [reqBody.authorName, reqBody.title, reqBody.location, req.params.id],
       function (err, result) {
@@ -101,9 +103,9 @@ app.put("/posts/:id", (req, res, next) => {
               res.status(400).json({ "error": res.message })
               return next();
           }
-          res.status(200).json(this.changes);
+          let title = `Your post has been updated, ID: ${req.params.id}`
+          res.render("result", { title: title, active: "-" });
       });
-
 });
 
 app.get("/posts/delete/:id", (req, res, next) => {
@@ -112,7 +114,7 @@ app.get("/posts/delete/:id", (req, res, next) => {
               res.status(400).json({ "error": res.message })
               return next();
           } else {
-          res.render("delete", { title: "Post has been deleted", active: "post", result: this.changes });
+          res.render("result", { title: "Post has been deleted", active: "post", result: this.changes });
           } 
       });
 });
