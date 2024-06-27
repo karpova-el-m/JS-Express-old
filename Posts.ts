@@ -2,8 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Posts {
-    @PrimaryGeneratedColumn({ primaryKeyConstraintName: "postId" })
-    id!: number;
+    @PrimaryGeneratedColumn()
+    postId!: number;
 
     @Column({ type: "varchar", length: 30 })
     authorName!: string;
