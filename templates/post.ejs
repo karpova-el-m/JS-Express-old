@@ -9,7 +9,6 @@
         <h1> <%= title %></h1>
     </div>
     <div class="container">
-        <h1> <%= title %></h1>
         <div>
             <form>
                 <table class="table">
@@ -22,14 +21,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% post.forEach(function(onePost) { %>
+                        <% for (let i = 1; i < 2; i += 1) { %> 
                         <tr>
-                        <td><%= onePost.authorName %></td>
-                        <td><%= onePost.title %></td>
-                        <td><%= onePost.location %></td>
-                        <td><%= onePost.publicationDate %></td>
+                        <td><%= post.authorName %></td>
+                        <td><%= post.title %></td>
+                        <td><%= post.location %></td>
+                        <td><%= post.publicationDate %></td>
                         </tr>
-                        <% }); %>
+                        <% }; %>
                     </tbody>
                 </table>
             </form>
